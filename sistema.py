@@ -50,6 +50,7 @@ class SistemaElevadores:
             if custo < menor_custo:
                 menor_custo = custo
                 melhor_elevador = e
+                #calcula qual elevador está mais perto do usuario
 
         return melhor_elevador
 
@@ -57,17 +58,17 @@ class SistemaElevadores:
         if not self.fila:
             return
 
-        chamada = self.fila.popleft()
+        chamada = self.fila.popleft() #pega a primeira chamada da fila
         elevador = self.escolher_elevador(chamada.andar_chamada)
         elevador.ocupado = True
 
-        self.estatisticas.registrar_espera(time.time() - chamada.timestamp)
+        self.estatisticas.registrar_espera(time.time() - chamada.timestamp)#registra o tempo de espera da chamada para fins de estatística
         print(f"\n🚀 Atendendo {chamada} com Elevador {elevador.id}")
 
-        elevador.mover_para(chamada.andar_chamada, self.estatisticas)
+        elevador.mover_para(chamada.andar_chamada, self.estatisticas)#move o elevador para o andar de chamada
         print(f"  [Elevador {elevador.id}] 🚪 Embarque no andar {chamada.andar_chamada}")
 
-        elevador.mover_para(chamada.andar_destino, self.estatisticas)
+        elevador.mover_para(chamada.andar_destino, self.estatisticas)#move o elevador para o andar de destino
         print(f"  [Elevador {elevador.id}] 🚪 Desembarque no andar {chamada.andar_destino}")
 
         self._otimizar_rota(elevador)
@@ -82,11 +83,11 @@ class SistemaElevadores:
             if chamada.andar_chamada == elevador.posicao:
                 del self.fila[i]
                 print(f"\n✨ Otimização: Elevador {elevador.id} já está no andar {chamada.andar_chamada}, atendendo agora!")
-                self.estatisticas.registrar_espera(time.time() - chamada.timestamp)
+                self.estatisticas.registrar_espera(time.time() - chamada.timestamp)#registra o tempo de espera da chamada
                 elevador.mover_para(chamada.andar_destino, self.estatisticas)
                 print(f"  [Elevador {elevador.id}] 🚪 Desembarque no andar {chamada.andar_destino}")
                 self._otimizar_rota(elevador)
                 return
 
     def get_status(self) -> List[str]:
-        return [f"Elevador {e.id}: Andar {e.posicao} | {'Ocupado' if e.ocupado else 'Livre'} | {e.direcao or 'Parado'}" for e in self.elevadores]
+        return [f"Elevador {e.id}: Andar {e.posicao} | {'Ocupado' if e.ocupado else 'Livre'} | {e.direcao or 'Parado'}" for e in self.elevadores]#retorna o status de cada elevador para exibição no menu de status

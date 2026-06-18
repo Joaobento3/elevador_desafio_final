@@ -13,6 +13,7 @@ import time
 from validacoes import validar_andar, formatar_andar
 from sistema import SistemaElevadores
 
+#ANSI escape codes pra formatação do texto no terminal
 RESET = "\033[0m"
 BOLD = "\033[1m"
 GREEN = "\033[92m"
@@ -52,7 +53,7 @@ def main():
                 andar_chamada = int(input("Andar de Origem: "))
                 if not validar_andar(andar_chamada):
                     print(f"{RED}❌ Andar inválido! Intervalo: -2 a 4.{RESET}")
-                    time.sleep(2)
+                    time.sleep(2) #congelar a tela por 2 segundos
                     continue
 
                 andar_destino = int(input("Andar de Destino: "))
@@ -73,7 +74,7 @@ def main():
             for s in sistema.get_status():
                 print(f"🔹 {s}")
             print("\n")
-            input("Pressione Enter para retornar...")
+            input("Pressione Enter para retornar...") #congelar a tela até o usuário pressionar enter
 
         elif opcao == '3':
             print(f"\n{BOLD}--- Analytics & Performance ---{RESET}")
