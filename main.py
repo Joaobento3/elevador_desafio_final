@@ -1,3 +1,13 @@
+'''Sistema de elevador SENAC-DF
+
+Integrantes do grupo:
+João Vitor Moreira Bento
+Tauã Rocha
+Allana Kamilla
+Aline karolly da silva macedo'''
+
+
+
 import os
 import time
 from validacoes import validar_andar, formatar_andar
